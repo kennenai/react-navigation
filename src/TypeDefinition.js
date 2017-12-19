@@ -376,6 +376,10 @@ export type NavigationTabScreenOptions = {|
     scene: TabScene,
     jumpToIndex: (index: number) => void
   ) => void,
+  tabBarOnLongPress?: (
+    scene: TabScene,
+    jumpToIndex: (index: number) => void
+  ) => void,
 |};
 
 /**
