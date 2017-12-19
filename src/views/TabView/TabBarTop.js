@@ -35,6 +35,14 @@ type Props = {
     scene: TabScene,
     jumpToIndex: (index: number) => void,
   }) => void,
+  getOnLongPress: (
+    previousScene: NavigationRoute,
+    scene: TabScene
+  ) => ({
+    previousScene: NavigationRoute,
+    scene: TabScene,
+    jumpToIndex: (index: number) => void,
+  }) => void,
   renderIcon: (scene: TabScene) => React.Element<*>,
   labelStyle?: TextStyleProp,
   iconStyle?: ViewStyleProp,
@@ -134,6 +142,18 @@ export default class TabBarTop extends React.PureComponent<Props> {
     }
   };
 
+  _handleOnLongPress = (scene: TabScene) => {
+    const { getOnLongPress, jumpToIndex, navigation }: Props = this.props;
+    const previousScene = navigation.state.routes[navigation.state.index];
+    const onLongPress = getOnLongPress(previousScene, scene);
+
+    if (onLongPress) {
+      onPress({ previousScene, scene, jumpToIndex });
+    } else {
+      jumpToIndex(scene.index);
+    }
+  };
+
   render() {
     // TODO: Define full proptypes
     const props: any = this.props;
@@ -142,6 +162,7 @@ export default class TabBarTop extends React.PureComponent<Props> {
       <TabBar
         {...props}
         onTabPress={this._handleOnPress}
+        onTabLongPress={this._handleOnLongPress}
         jumpToIndex={() => {}}
         renderIcon={this._renderIcon}
         renderLabel={this._renderLabel}

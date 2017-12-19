@@ -116,6 +116,15 @@ class TabView extends React.PureComponent<Props> {
     return options.tabBarOnPress;
   };
 
+  _getOnLongPress = (previousScene: TabScene, { route }: TabScene) => {
+    const options = this.props.router.getScreenOptions(
+      this.props.childNavigationProps[route.key],
+      this.props.screenProps || {}
+    );
+
+    return options.tabBarOnLongPress;
+  };
+
   _getTestIDProps = ({ route }: TabScene) => {
     const options = this.props.router.getScreenOptions(
       this.props.childNavigationProps[route.key],
@@ -156,6 +165,7 @@ class TabView extends React.PureComponent<Props> {
         getLabel={this._getLabel}
         getTestIDProps={this._getTestIDProps}
         getOnPress={this._getOnPress}
+        getOnLongPress={this._getOnLongPress}
         renderIcon={this._renderIcon}
         animationEnabled={animationEnabled}
       />
