@@ -22,6 +22,7 @@ const ANDROID_VERSION_LOLLIPOP = 21;
 
 type Props = {
   onPress?: () => void,
+  onLongPress?: () => void,
   delayPressIn?: number,
   borderless?: boolean,
   pressColor?: string,
@@ -34,6 +35,14 @@ export default class TouchableItem extends React.Component<Props> {
   static defaultProps = {
     borderless: false,
     pressColor: 'rgba(0, 0, 0, .32)',
+  };
+
+  _handlePress = () => {
+    global.requestAnimationFrame(this.props.onPress);
+  };
+
+  _handleLongPress = () => {
+    global.requestAnimationFrame(this.props.onLongPress);
   };
 
   render() {

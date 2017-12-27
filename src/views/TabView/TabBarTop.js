@@ -134,7 +134,6 @@ export default class TabBarTop extends React.PureComponent<Props> {
     const { getOnPress, jumpToIndex, navigation }: Props = this.props;
     const previousScene = navigation.state.routes[navigation.state.index];
     const onPress = getOnPress(previousScene, scene);
-
     if (onPress) {
       onPress({ previousScene, scene, jumpToIndex });
     } else {
@@ -148,7 +147,7 @@ export default class TabBarTop extends React.PureComponent<Props> {
     const onLongPress = getOnLongPress(previousScene, scene);
 
     if (onLongPress) {
-      onPress({ previousScene, scene, jumpToIndex });
+      onLongPress({ previousScene, scene, jumpToIndex });
     } else {
       jumpToIndex(scene.index);
     }
