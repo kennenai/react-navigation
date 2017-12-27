@@ -43,6 +43,14 @@ type Props = {
     scene: TabScene,
     jumpToIndex: (index: number) => void,
   }) => void,
+  getOnLongPress: (
+    previousScene: NavigationRoute,
+    scene: TabScene
+  ) => ({
+    previousScene: NavigationRoute,
+    scene: TabScene,
+    jumpToIndex: (index: number) => void,
+  }) => void,
   getTestIDProps: (scene: TabScene) => (scene: TabScene) => any,
   renderIcon: (scene: TabScene) => React.Node,
   style?: ViewStyleProp,
@@ -164,6 +172,7 @@ class TabBarBottom extends React.PureComponent<Props> {
       navigation,
       jumpToIndex,
       getOnPress,
+      getOnLongPress,
       getTestIDProps,
       activeBackgroundColor,
       inactiveBackgroundColor,
@@ -195,6 +204,7 @@ class TabBarBottom extends React.PureComponent<Props> {
             const focused = index === navigation.state.index;
             const scene = { route, index, focused };
             const onPress = getOnPress(previousScene, scene);
+            const onLongPress = getOnLongPress(previousScene, scene);
             const outputRange = inputRange.map(
               (inputIndex: number) =>
                 inputIndex === index
@@ -218,6 +228,10 @@ class TabBarBottom extends React.PureComponent<Props> {
                 onPress={() =>
                   onPress
                     ? onPress({ previousScene, scene, jumpToIndex })
+                    : jumpToIndex(index)}
+                onLongPress={() =>
+                  onLongPress
+                    ? onLongPress({ previousScene, scene, jumpToIndex })
                     : jumpToIndex(index)}
               >
                 <Animated.View
